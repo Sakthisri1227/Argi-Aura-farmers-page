@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+    <style>
+        /* Styles */
+        body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-image: url('https://i.ibb.co/CKZ6hbP/image-2.png'); /* Replace 'your-image-url.jpg' with your actual image URL */
+    background-size: 100% 100%; /* Ensures the image stretches to cover both width and height */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    background-position: top; /* Aligns the image to start from the top */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9); /* Adds a semi-transparent white background */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+        h1, h2 {
+            text-align: center;
+            color: #444;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            background-color: #f4f6f9;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .market-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .market-item {
+            background: #ffeb3b;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .market-item:hover {
+            background: #ffd54f;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .product-card {
+    background: #799aab;
+    padding: 12px;
+    border: 1px solid #f1f1f1;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%; /* Ensures cards adapt to grid column */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 300px; /* Set a consistent minimum height */
+    max-height: 300px; /* Prevent cards from being too tall */
+    box-sizing: border-box; /* Includes padding and border in size */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    max-height: 150px; /* Consistent image size */
+    object-fit: cover; /* Ensures images maintain aspect ratio */
+}
+
+.product-card h3 {
+    margin: 12px 0 6px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.product-card p {
+    margin: 0;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+    gap: 20px; /* Spacing between cards */
+    padding: 20px;
+}
+
+        .selected-products-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .selected-product-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Farmer Registration Page -->
+<div class="container" id="registration-page">
+    <h1>Farmer Registration</h1>
+    <label for="name">Name</label>
+    <input type="text" id="name" placeholder="Enter your name">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" placeholder="Enter your phone number">
+    <label for="address">Address</label>
+    <input type="text" id="address" placeholder="Enter your address">
+    <label for="pincode">Pincode</label>
+    <input type="text" id="pincode" placeholder="Enter your pincode">
+    <button onclick="submitRegistration()">Submit</button>
+</div>
+
+<!-- Nearest Market Page -->
+<div class="container" id="market-page" style="display: none;">
+    <div class="top-bar">
+        <h2>Nearest Markets</h2>
+        <button onclick="viewSelectedProducts()">View Selected Products</button>
+    </div>
+    <ul class="market-list" id="market-list"></ul>
+    
+    <!-- Demand Section -->
+    <div class="demand-section">
+        <h3>Products in Demand</h3>
+        <div class="product-grid">
+            <!-- Sample products in demand -->
+            <div class="product-card">
+                <img src="https://i.ibb.co/BTjKfSs/707cb322e811b757407aca7e154dd8b7.jpg" alt="Tomatoes">
+                <h3>Tomatoes</h3>
+                <p>Rate: 80/kg</p>
+            </div>
+            <div class="product-card">
+                <img src="https://i.ibb.co/74QcVWD/c1f241d44b6e38c9a2a9df7dec8666a7.jpg" alt="Onions">
+                <h3>Onions</h3>
+                <p>Rate:100/kg</p>
+            </div>
+            <div class="product-card">
+                <img src="https://i.ibb.co/9HVj7hh/brinjal.jpg" alt="Brinjal">
+                <h3>Brinjal</h3>
+                <p>Rate: 80/dozen</p>
+            </div>
+            <div class="product-card">
+                <img src="https://i.ibb.co/z6K00wb/beetroot.jpg" alt="Beetroot">
+                <h3>Beetroot</h3>
+                <p>Rate: 70/kg</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Product Page -->
+<div class="container" id="product-page" style="display: none;">
+    <div class="top-bar">
+        <h2>Available Products</h2>
+        <button onclick="goToMarkets()">Back to Markets</button>
+    </div>
+    <div id="product-categories"></div>
+</div>
+
+<!-- Notify Page -->
+<div class="container" id="notify-page" style="display: none;">
+    <h2>Notify Quantity</h2>
+    <p id="selected-product"></p>
+    <label for="quantity">Enter Quantity (in kg)</label>
+    <input type="number" id="quantity" placeholder="Enter quantity">
+    <button onclick="notifyOwner()">Notify</button>
+    <button onclick="goToProducts()">Back to Products</button>
+</div>
+
+<!-- View Selected Products Page -->
+<div class="container" id="selected-products-page" style="display: none;">
+    <h2>Selected Products</h2>
+    <ul class="selected-products-list" id="selected-products-list"></ul>
+    <button onclick="goToProducts()">Back to Products</button>
+</div>
+
+<script>
+    const markets = {
+        'Karur': [
+            { name: 'Karur main ulavar sandhai', address: 'Near Bus Stand, Karur' },
+            { name: 'Kulithalai market', address: 'kulithalai, Karur' },
+            { name: 'pallapatti market', address: 'pallapatti, Karur' }
+        ],
+        'Namakkal': [
+            { name: 'Mohanur Market ', address: 'Mohanur, Namakkal' },
+            { name: 'Tiruchengode Market ', address: 'Tiruchengode, Namakkal' },
+            { name: 'Namakkal Market ', address: 'Namakkal, Namakkal' }
+        ],
+        'Dindigul': [
+            { name: 'Dindigul Market ', address: 'Dindigul, Dindigul' },
+            { name: 'Plani Market ', address: 'Palani, Dindigul' },
+            { name: 'Gandhi Market ', address: 'Gandhi, Dindigul' }
+        ],
+        'Tirupur': [
+            { name: 'udumalapet Market ', address: 'udumalapet, Tirupur' },
+            { name: 'palladam Market ', address: 'palladam, Tirupur' },
+            { name: 'tirupur Market ', address: 'tirupur, Tirupur' }
+        ],
+        'Erode': [
+            { name: 'Perundurai Market ', address: 'Perundurai, Erode' },
+            { name: 'thalavadi Market ', address: 'thalavadi, Erode' },
+            { name: 'periyar nagar Market ', address: 'periyar nagar, Erode' }
+        ],
+        'Coimbatore': [
+            { name: 'kurichi Market ', address: 'kurichi, Coimbatore' },
+            { name: 'ooty Market ', address: 'ooty, Coimbatore' },
+            { name: 'pollachi nagar Market ', address: 'pollachi nagar, Coimbatore' }
+        ]
+    };
+
+    const products = {
+        vegetables: [
+                { name: 'Tomatoes', rate: '80/kg',image :"https://i.ibb.co/BTjKfSs/707cb322e811b757407aca7e154dd8b7.jpg" },
+                { name: 'Potatoes', rate: '50/kg', image :"https://i.ibb.co/LPMcFkk/135920a3d52a64ec51b5d0de9bf8bf8c.jpg" },
+                { name: 'Onions', rate: '100/kg', image: "https://i.ibb.co/74QcVWD/c1f241d44b6e38c9a2a9df7dec8666a7.jpg"},
+                { name: 'Beans', rate: '90/kg', image: "https://i.ibb.co/JvSCM4j/Beans.jpg"},
+                { name: 'Carrot', rate: '70/kg', image: "https://i.ibb.co/R7ChKjZ/carrot.jpg"},
+                { name: 'Beetroot', rate: '80/kg', image: "https://i.ibb.co/z6K00wb/beetroot.jpg"},
+                { name:'Brinjal', rate:'70/kg', image:'https://i.ibb.co/9HVj7hh/brinjal.jpg'}
+             ],
+
+                fruits: [
+                { name: 'pineapple', rate: '76/kg', image: 'https://i.ibb.co/KhWSssL/df70a4a990509f38754a9f91eccd3478.jpg' },
+                { name: 'orange', rate: '52/kg', image: 'https://i.ibb.co/7jrTnb9/f0ba4bac06448903100453ed4902b2bb.jpg' },
+                { name: 'guava', rate: '50/kg', image: 'https://i.ibb.co/YRRcT61/03e6c12090bbe0c9d421b6de421567ed.jpg' },
+                { name: 'papaya', rate: '30/kg', image: 'https://i.ibb.co/0mdNqTP/f1959ab5bd7597786840e9b0856a0d98.jpg' },
+                { name: 'amla', rate: '70/kg', image: 'https://i.ibb.co/Y8wFNFT/9f3f2ec552b5e35f3e584f7169f31c4d.jpg' },
+                { name: 'grapes', rate: '108/kg', image: 'https://i.ibb.co/pf0D5XD/f94166e18e6abf3946d438538927c2b5.jpg' },
+                { name: 'pear', rate: '200/kg', image: 'https://i.ibb.co/0Gh9QD9/7043217466ca9fb5589664f3decb30c3.jpg' },
+                { name: 'banana', rate: '68/kg', image: 'https://i.ibb.co/DMwjZWN/59a9efe8a630f06ddce2ad4ef9bf3750.jpg' },
+                { name: 'apple', rate: '149/kg', image: 'https://i.ibb.co/WNrkkR6/49f8aa47e301749886b1ffd107323d85.jpg' },
+                { name: 'pomegranate', rate: '288/kg', image: 'https://i.ibb.co/R3qPd9K/pomegranate.jpg' },
+                { name: 'water apple', rate: '150/kg', image: 'https://i.ibb.co/N2rdQ0H/f6408c08f9ea1c532989d709c8657d46.jpg' },
+                { name: 'mango', rate: '127/kg', image: 'https://i.ibb.co/gJtLjXp/24122addd187a59cd5adcba4b0fc2128.jpg' }
+            ],
+
+            greens: [
+                { name: 'spinach', rate: '30/kg', image: 'https://i.ibb.co/PFn5mQF/spinach.jpg' },
+                { name: 'manathakali keerai', rate: '37/kg', image: 'https://i.ibb.co/2KkQ15m/22c55c6f051ca81cdc393c320ea0411c.jpg' },
+                { name: 'Murungai Keerai', rate: '30/kg', image: 'https://i.ibb.co/TMWfcQY/murungai.jpg' },
+                { name: 'Coriander Leaves', rate: '60/kg', image: 'https://i.ibb.co/dtYWchZ/coriander-leaves.jpg' },
+                { name: 'Curry Leaves', rate: '100/kg', image: 'https://i.ibb.co/y5mh5bx/curry-leaves.jpg' },
+                { name: 'Mint', rate: '60/kg', image: 'https://i.ibb.co/zSnGH2Q/mint.jpg' }
+                
+            ],
+
+grains: [
+                { name: 'wheat', rate: '48/kg', image: 'https://i.ibb.co/5YXJzDx/50ec9b33f5f74d877be8512c9882c5ef.jpg' },
+                { name: 'finger millet', rate: '91/kg', image: 'https://i.ibb.co/6b8GN7C/20ac8cafe6691a13431e716139c08480.jpg' },
+                { name: 'pearl millet', rate: '80/kg', image: 'https://i.ibb.co/1m5Rrr9/b7eaed5439099e3675309db6b4d0863d.jpg' },
+                { name: 'channa', rate: '80/kg', image: 'https://i.ibb.co/DQTXVch/c1d3302f410244e027eabca5cbff739c.jpg' },
+                { name: 'rice', rate: '70/kg', image: 'https://i.ibb.co/3hHyKCb/32ec746045bd82a67613558d01316e0e.jpg' },
+                { name: 'black sesame', rate: '100/kg', image: 'https://i.ibb.co/rcMW8RG/76c731fd8804f6cc9455674bf87a674c-1.jpg' },
+                { name: 'urad bean ', rate: '160/kg', image: 'https://i.ibb.co/RjJnLw8/50be9faa35387d63f33f521d24bdfb11.jpg' },
+                { name: 'horse gram ', rate: '80/kg', image: 'https://i.ibb.co/XkYmrCx/456d6498f860168823bb274b62c277e7.jpg' },
+                { name: 'foxtail millet', rate: '150/kg', image: 'https://i.ibb.co/Rj0TxwN/cca9aae055542683adb464b27350fb2f.jpg' }
+            ],
+    
+            spices: [
+                { name: 'cardamom', rate: '400/100g', image: 'https://i.ibb.co/vPF4L00/088eb5d5c5ad1eb1826a2515a506cd1c.jpg' },
+                { name: 'coriander seeds', rate: '300/kg', image: 'https://i.ibb.co/z8W2vYX/3d5fdf56da595ed7f8ed10977d932cb1.jpg' },
+                { name: 'star anise', rate: '140/100g', image: 'https://i.ibb.co/m8mXY2c/75c6d2ef440eb77ca742e4c57bd05a62.jpg' },
+                { name: 'cloves', rate: '140/100g', image: 'https://i.ibb.co/3FktPd5/36b73648d74af0569cc6c92be5461282.jpg' },
+                { name: 'cinamon', rate: '120/100g', image: 'https://i.ibb.co/DLw834K/b2f685b08863af760bef715d860b551c.jpg' },
+                { name: 'fennel seeds', rate: '180/500g', image: 'https://i.ibb.co/QYncvRD/04a0095edcd8a5968538c1ead388d727.jpg' },
+                { name: 'red chilli', rate: '70/kg', image: 'https://i.ibb.co/6tQGkBW/ce0b3792a3a3ad3fc8bada62bb422264.jpg' },
+                { name: 'bay leaf', rate: '40/kg', image: 'https://i.ibb.co/DGMXVvZ/0231b3450bbceb7c3f04469068c06ce1.jpg' }
+            ]
+
+        };
+
+
+    let selectedProducts = [];
+    let currentProduct = null;
+
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.container');
+        pages.forEach(page => page.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    function submitRegistration() {
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+
+        if (!name || !phone || !address) {
+            alert('All fields are required!');
+            return;
+        }
+
+        const city = Object.keys(markets).find(city => address.toLowerCase().includes(city.toLowerCase()));
+        if (!city) {
+            alert('Sorry, no markets available in your area!');
+            return;
+        }
+
+        localStorage.setItem('farmer', JSON.stringify({ name, phone, address, city }));
+        loadMarkets(city);
+    }
+
+    function loadMarkets(city) {
+        const marketList = document.getElementById('market-list');
+        marketList.innerHTML = '';
+        markets[city].forEach(market => {
+            const li = document.createElement('li');
+            li.classList.add('market-item');
+            li.innerHTML = `<strong>${market.name}</strong><br>${market.address}`;
+            li.onclick = () => loadProducts(city);
+            marketList.appendChild(li);
+        });
+        showPage('market-page');
+    }
+
+    function loadProducts(city) {
+        const productCategories = document.getElementById('product-categories');
+        productCategories.innerHTML = '';
+        
+        Object.keys(products).forEach(category => {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.innerHTML = `<h3>${category.charAt(0).toUpperCase() + category.slice(1)}</h3>`;
+            
+            const grid = document.createElement('div');
+            grid.classList.add('product-grid');
+            products[category].forEach(product => {
+                const card = document.createElement('div');
+                card.classList.add('product-card');
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.rate}</p>
+                    <button onclick="selectProduct('${product.name}', '${product.rate}')">Select</button>
+                `;
+                grid.appendChild(card);
+            });
+            categoryDiv.appendChild(grid);
+            productCategories.appendChild(categoryDiv);
+        });
+
+        showPage('product-page');
+    }
+
+    function selectProduct(name, rate) {
+        currentProduct = { name, rate };
+        showPage('notify-page');
+        document.getElementById('selected-product').innerHTML = `You selected: ${name} (${rate})`;
+    }
+
+    function notifyOwner() {
+        const quantity = document.getElementById('quantity').value.trim();
+        if (!quantity) {
+            alert('Quantity is required!');
+            return;
+        }
+
+        selectedProducts.push({ ...currentProduct, quantity });
+        document.getElementById('quantity').value = '';
+        alert('Product added to selected list');
+    }
+
+    function viewSelectedProducts() {
+        const selectedList = document.getElementById('selected-products-list');
+        selectedList.innerHTML = '';
+
+        if (selectedProducts.length === 0) {
+            selectedList.innerHTML = '<li>No products selected yet!</li>';
+        } else {
+            selectedProducts.forEach(product => {
+                const li = document.createElement('li');
+                li.classList.add('selected-product-item');
+                li.innerHTML = `${product.name} - ${product.rate} (Qty: ${product.quantity}kg)`;
+                selectedList.appendChild(li);
+            });
+        }
+
+        showPage('selected-products-page');
+    }
+
+    function goToMarkets() {
+        showPage('market-page');
+    }
+
+    function goToProducts() {
+        showPage('product-page');
+    }
+</script>
+
+</body>
+</html>
